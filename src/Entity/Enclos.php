@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EnclosRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,11 +18,6 @@ class Enclos
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $espace;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -42,21 +39,25 @@ class Enclos
      */
     private $quarantaine;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Espace::class, inversedBy="enclos")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $espace;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Animal::class, mappedBy="enclos")
+     */
+    private $animaux;
+
+    public function __construct()
+    {
+        $this->animaux = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getEspace(): ?int
-    {
-        return $this->espace;
-    }
-
-    public function setEspace(int $espace): self
-    {
-        $this->espace = $espace;
-
-        return $this;
     }
 
     public function getNom(): ?string
@@ -106,4 +107,47 @@ class Enclos
 
         return $this;
     }
+
+    public function getEspace(): ?Espace
+    {
+        return $this->espace;
+    }
+
+    public function setEspace(?Espace $espace): self
+    {
+        $this->espace = $espace;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Animal>
+     */
+    public function getAnimaux(): Collection
+    {
+        return $this->animaux;
+    }
+
+    public function addAnimaux(Animal $animaux): self
+    {
+        if (!$this->animaux->contains($animaux)) {
+            $this->animaux[] = $animaux;
+            $animaux->setEnclos($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimaux(Animal $animaux): self
+    {
+        if ($this->animaux->removeElement($animaux)) {
+            // set the owning side to null (unless already changed)
+            if ($animaux->getEnclos() === $this) {
+                $animaux->setEnclos(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

@@ -67,6 +67,11 @@ class Animal
      */
     private $quarantaine;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Enclos::class, inversedBy="animaux")
+     */
+    private $enclos;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -188,6 +193,18 @@ class Animal
     public function setQuarantaine(?bool $quarantaine): self
     {
         $this->quarantaine = $quarantaine;
+
+        return $this;
+    }
+
+    public function getEnclos(): ?Enclos
+    {
+        return $this->enclos;
+    }
+
+    public function setEnclos(?Enclos $enclos): self
+    {
+        $this->enclos = $enclos;
 
         return $this;
     }
