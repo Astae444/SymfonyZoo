@@ -45,16 +45,6 @@ class Enclos
      */
     private $espace;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Animal::class, mappedBy="enclos")
-     */
-    private $animaux;
-
-    public function __construct()
-    {
-        $this->animaux = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -116,36 +106,6 @@ class Enclos
     public function setEspace(?Espace $espace): self
     {
         $this->espace = $espace;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Animal>
-     */
-    public function getAnimaux(): Collection
-    {
-        return $this->animaux;
-    }
-
-    public function addAnimaux(Animal $animaux): self
-    {
-        if (!$this->animaux->contains($animaux)) {
-            $this->animaux[] = $animaux;
-            $animaux->setEnclos($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAnimaux(Animal $animaux): self
-    {
-        if ($this->animaux->removeElement($animaux)) {
-            // set the owning side to null (unless already changed)
-            if ($animaux->getEnclos() === $this) {
-                $animaux->setEnclos(null);
-            }
-        }
 
         return $this;
     }

@@ -197,15 +197,4 @@ class Animal
         return $this;
     }
 
-    public function getEnclos(): ?Enclos
-    {
-        return $this->enclos;
-    }
-
-    public function setEnclos(?Enclos $enclos): self
-    {
-        $this->enclos = $enclos;
-
-        return $this;
-    }
 }

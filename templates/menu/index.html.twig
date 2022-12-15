@@ -1,0 +1,5 @@
+{% for e in enclos %}
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path("app_animaux", {"id":e.id}) }}">{{ e.titre }}</a>
+    </li>
+{% endfor %}
