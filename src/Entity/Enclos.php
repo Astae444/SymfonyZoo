@@ -45,6 +45,11 @@ class Enclos
      */
     private $espace;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Enclos::class, mappedBy="Animal", orphanRemoval=true)
+     */
+    private $animaux;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -110,4 +115,38 @@ class Enclos
         return $this;
     }
 
+    public function __construct()
+    {
+        $this->animaux = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection<int, Animal>
+     */
+    public function getAnimaux(): Collection
+    {
+        return $this->animaux;
+    }
+
+    public function addAnimaux(Animal $animaux): self
+    {
+        if (!$this->animaux->contains($animaux)) {
+            $this->animaux->add($animaux);
+            $animaux->setEnclos($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimaux(Animal $animaux): self
+    {
+        if ($this->animaux->removeElement($animaux)) {
+            // set the owning side to null (unless already changed)
+            if ($animaux->getEnclos() === $this) {
+                $animaux->setEnclos(null);
+            }
+        }
+
+        return $this;
+    }
 }

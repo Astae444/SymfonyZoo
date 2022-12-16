@@ -8,22 +8,36 @@
         <table class="mt-3 table table-striped">
             <tr>
                 <th>Nom de l'enclos</th>
-                <th></th>
+                <th>Superficie</th>
+                <th>Capacité</th>
+                <th>Quarantaine</th>
+                <th>Espace</th>
                 <th></th>
             </tr>
             {% for e in enclos %}
                 <tr>
-                    <td>{{ e.titre }}</td>
-                    <td></td>
+                    <td>{{ e.nom }}</td>
+                    <td>{{ e.superficie }} m²</td>
+                    <td>{{ e.capacite }}</td>
+                    <td>{% if e.quarantaine == 0 %}
+                            Non
+                        {% endif %}
+                        {% if e.quarantaine == 1 %}
+                            Oui
+                        {% endif %}
+                    </td>
+                    <td><a class="btn" href="{{ path("app_espaces", {"id":e.Espace.id}) }}">{{ e.Espace.nom }}</a></td>
                     <td>
-                        <a class="btn btn-secondary" href="{{ path("app_enclos_modifier", {"id":c.id}) }}">Modifier</a>
-                        <a class="btn btn-danger" href="{{ path("app_enclos_supprimer", {"id":c.id}) }}">Supprimer</a>
-                        <a class="btn btn-primary" href="{{ path("app_animaux", {"id":c.id}) }}">Voir les animaux</a>
+                        <a class="btn btn-secondary" href="{{ path("app_enclos_modifier", {"id":e.id}) }}">Modifier</a>
+                        <a class="btn btn-danger" href="{{ path("app_enclos_supprimer", {"id":e.id}) }}">Supprimer</a>
+                        <a class="btn btn-primary" href="{{ path("app_animaux", {"id":e.id}) }}">Voir les animaux</a>
                     </td>
                 </tr>
             {% endfor %}
         </table>
         <a href="{{ path("app_enclos_ajouter") }}" class="mt-5 mx-1 btn btn-success">Ajouter un enclos</a>
+        <a href="{{ path("app_espaces_ajouter") }}" class="mt-5 mx-1 btn btn-success">Ajouter un espace</a>
         <a href="{{ path("app_animaux_ajouter") }}" class="mt-5 mx-1 btn btn-success">Ajouter un animal</a>
+        <a href="{{ path("app_espaces") }}" class="mt-5 mx-1 btn btn-primary">Voir les espaces</a>
     </div>
 {% endblock %}

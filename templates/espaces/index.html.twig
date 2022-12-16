@@ -1,20 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EspacesController!{% endblock %}
+{% block title %}Voir les espaces{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/SymfonyZooBDD/src/Controller/EspacesController.php'|file_link(0) }}">src/Controller/EspacesController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/SymfonyZooBDD/templates/espaces/index.html.twig'|file_link(0) }}">templates/espaces/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="container">
+        <div class="row">
+            {% for e in espace %}
+                <div class="col col-3">
+                    <div class="mt-5 card">
+                        <div class="card-body">
+                            <h2 class="card-title">{{ e.nom }}</h2>
+                            <span>Superficie : {{ e.superficie }} m²</span><br>
+                            <span>Date d'ouverture : {{ e.ouverture|date("d/m/Y") }}</span><br>
+                            <span>Date de fermeture : {{ e.fermeture|date("d/m/Y") }}</span>
+                            <a href="{{ path('app_espaces_modifier', {"id":e.id}) }}" class="mt-5 btn btn-secondary">Modifier</a>
+                            <a href="{{ path('app_espaces_supprimer', {"id":e.id}) }}" class="mt-5 btn btn-danger">Supprimer</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{{ path("app_espaces_ajouter") }}" class="mt-5 btn btn-success  ">Ajouter un espace</a>
+    </div>
 {% endblock %}

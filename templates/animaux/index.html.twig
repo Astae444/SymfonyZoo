@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voir les animaux{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        {% if enclos.nom is defined %}
+            <h1 class="mt-5">Affichage des animaux de l'enclos "{{ enclos.nom }}"</h1>
+        {% endif %}
+        {% if espace.nom is defined %}
+            <h1 class="mt-5">Affichage des animaux de l'espace {{ espace.nom }}</h1>
+        {% endif %}
+        <table class="mt-3 table table-striped">
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Date de naissance</th>
+                <th>Arrivée</th>
+                <th>Départ</th>
+                <th>Propriétaire</th>
+                <th>Genre</th>
+                <th>Espèce</th>
+                <th>Stérilisé</th>
+                <th>Quarantaine</th>
+                <th></th>
+            </tr>
+            {% for a in animaux %}
+                <tr>
+                    <td>{{ a.numero }}</td>
+                    <td>{{ a.nom }}</td>
+                    <td>{{ a.ddn|date("d/m/Y") }}</td>
+                    <td>{{ a.arrivee|date("d/m/Y") }}</td>
+                    <td>{{ a.depart|date("d/m/Y") }}</td>
+                    <td>{% if a.proprietaire == 0 %}
+                            Non
+                        {% endif %}
+                        {% if a.proprietaire == 1 %}
+                            Oui
+                        {% endif %}
+                    </td>
+                    <td>{% if a.genre == 0 %}
+                            femelle
+                        {% endif %}
+                        {% if a.genre == 1 %}
+                            mâle
+                        {% endif %}
+                    </td>
+                    <td>{{ a.espece }}</td>
+                    <td>{% if a.sterilise == 0 %}
+                            Non
+                        {% endif %}
+                        {% if a.sterilise == 1 %}
+                            Oui
+                        {% endif %}
+                    </td>
+                    <td>{% if a.quarantaine == 0 %}
+                            Non
+                        {% endif %}
+                        {% if a.quarantaine == 1 %}
+                            Oui
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a class="btn btn-secondary" href="{{ path("app_animaux_modifier", {"id":a.id}) }}">Modifier</a>
+                        <a class="btn btn-danger" href="{{ path("app_animaux_supprimer", {"id":a.id}) }}">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <a href="{{ path("app_animaux_ajouter") }}" class="mt-5 btn btn-success">Ajouter un animal</a>
+    </div>
+{% endblock %}

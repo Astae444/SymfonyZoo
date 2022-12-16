@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AnimalRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -197,4 +199,15 @@ class Animal
         return $this;
     }
 
+    public function getEnclos(): ?Enclos
+    {
+        return $this->Enclos;
+    }
+
+    public function setEnclos(?Enclos $Enclos): self
+    {
+        $this->Enclos = $Enclos;
+
+        return $this;
+    }
 }

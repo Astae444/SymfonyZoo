@@ -4,10 +4,12 @@ namespace App\Form;
 
 use App\Entity\Enclos;
 use App\Entity\Espace;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use function Symfony\Component\Translation\t;
 
 class EnclosType extends AbstractType
 {
@@ -16,10 +18,10 @@ class EnclosType extends AbstractType
         $builder
             ->add('Nom')
             ->add('Superficie')
-            ->add('Capacité')
+            ->add('Capacite')
             ->add('Espace', EntityType::class, [
-                'class'=>Espace::class, //choix de la classe liée
-                'choice_label'=>"nom", //choix de ce qui sera affihé comme texte
+                'class'=>Espace::class,
+                'choice_label'=>"nom",
                 'multiple'=>false,
                 'expanded'=>false
             ])
